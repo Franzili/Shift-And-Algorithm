@@ -23,10 +23,11 @@ fun createBitMaskTable(pattern: String): BitMaskTable {
 
 /**
  * Input: @param{pattern} to search in a given @param{text}
- * Returns an index of where the match begins in the text, or -1 if there was no match.
+ * Returns a list of indices of where the match begins in the text.
  */
-fun shiftAnd(pattern: String, text: String): Int {
+fun shiftAnd(pattern: String, text: String): List<Int> {
     val bTable = createBitMaskTable(pattern)
+    val matches = ArrayList<Int>()
     val m = pattern.length
     val l = text.length
     val t = text.toCharArray()
@@ -37,12 +38,12 @@ fun shiftAnd(pattern: String, text: String): Int {
         d = (d shl(1) or 1) and (bTable.getOrDefault(t[i], 0) or 0)
         matched = d and matchMask
         if (matched != 0L) {
-            return i - m + 1
+            matches.add(i - m + 1)
         }
     }
-    return -1
+    return matches
 }
 
 fun main(args: Array<String>) {
-    print(shiftAnd("nana", "banana"))
+    shiftAnd("nana", "banana").forEach { p -> println(p) }
 }
