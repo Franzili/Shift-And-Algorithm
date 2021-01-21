@@ -35,7 +35,7 @@ fun shiftAnd(pattern: String, text: String): List<Int> {
     var matched: Long
     var d: Long = 0
     for (i in 0 until l) {
-        d = (d shl(1) or 1) and (bTable.getOrDefault(t[i], 0) or 0)
+        d = (d shl(1) or 1) and bTable.getOrDefault(t[i], 0)
         matched = d and matchMask
         if (matched != 0L) {
             matches.add(i - m + 1)
@@ -45,5 +45,5 @@ fun shiftAnd(pattern: String, text: String): List<Int> {
 }
 
 fun main(args: Array<String>) {
-    shiftAnd("nana", "banana").forEach { p -> println(p) }
+    shiftAnd("nana", "banananana").forEach { p -> println(p) }
 }
